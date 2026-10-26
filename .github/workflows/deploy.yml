@@ -34,7 +34,7 @@ jobs:
       - name: Gerar focos do INPE
         run: uv run --directory etl --locked python -m terra_etl --out ../public/data/focos.json
       - run: npm run build
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
