@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Focos do INPE saem em arquivos diários; uma rodada por hora mantém o painel recente.
+    - cron: '17 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: ETL e build
+    runs-on: ubuntu-latest
+    env:
+      # Caminho do GitHub Pages: https://<usuario>.github.io/<repositorio>/
+      VITE_BASE: /${{ github.event.repository.name }}/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: astral-sh/setup-uv@v6
+      # Se o ETL falhar (fonte fora do ar ou dado inválido), o job para e o Pages mantém a publicação anterior.
+      - name: Gerar focos do INPE
+        run: uv run --directory etl --locked python -m terra_etl --out ../public/data/focos.json
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,811 @@
+/*
+ * Layout e componentes da prancha. Cores e fontes vêm de src/styles.css (tokens @theme).
+ * Desktop: o globo ocupa a prancha inteira e os painéis são margem. Celular: pilha vertical.
+ */
+
+.stage {
+  position: relative;
+  min-height: 100dvh;
+  isolation: isolate;
+}
+
+.neatline {
+  z-index: 3;
+}
+
+/* ---------- globo ---------- */
+
+.globe-wrap {
+  position: relative;
+  height: 62svh;
+  min-height: 360px;
+  margin: 12px 12px 0;
+  overflow: hidden;
+}
+
+.globe-canvas {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+}
+
+.globe-canvas:active {
+  cursor: grabbing;
+}
+
+.globe-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.globe-hint,
+.center-coords {
+  position: absolute;
+  z-index: 2;
+  bottom: 12px;
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: 0.9375rem;
+  pointer-events: none;
+}
+
+.globe-hint {
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.center-coords {
+  right: 14px;
+  color: var(--color-ink-3);
+  font-size: 0.875rem;
+}
+
+.nogl {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-ink);
+}
+
+.stage-nogl .globe-wrap {
+  height: auto;
+  min-height: 0;
+  border: 1px solid var(--color-rule);
+  background: var(--color-panel);
+}
+
+.stage-nogl .nogl {
+  position: static;
+  padding: 2.5rem 1.25rem;
+}
+
+/* Tooltips do globe.gl: mesmo papel dos painéis, nada de caixa padrão */
+.scene-tooltip,
+.scene-label {
+  font-family: var(--font-sans);
+}
+
+.tip {
+  display: inline-block;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--color-panel) 94%, transparent);
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.7);
+}
+
+/* ---------- capa e cifras ---------- */
+
+.masthead {
+  padding: 20px 16px 0;
+}
+
+.title {
+  font-size: clamp(3rem, 5.2vw, 4.75rem);
+  color: var(--color-ink);
+}
+
+.deck {
+  margin-top: 0.75rem;
+  max-width: 30ch;
+  color: var(--color-ink-2);
+  font-size: 1.0625rem;
+}
+
+.stamp {
+  margin-top: 0.75rem;
+  color: var(--color-ink-3);
+  font-size: 0.9375rem;
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 16px 16px 0;
+}
+
+.figure {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--color-rule);
+}
+
+.figure-label {
+  color: var(--color-ink-2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.figure-value {
+  font-size: clamp(2.6rem, 5vw, 4.25rem);
+  color: var(--color-ink);
+}
+
+.figure-note {
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.ghost {
+  color: color-mix(in oklab, var(--color-ink-3) 45%, transparent);
+}
+
+/* ---------- painéis ---------- */
+
+.side {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: 16px;
+}
+
+.reading,
+.controls,
+.key,
+.list-view,
+.selection {
+  padding: 1rem 1.1rem;
+  background: var(--color-panel);
+  border: 1px solid color-mix(in oklab, var(--color-rule) 85%, transparent);
+  border-radius: 2px;
+  box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.75);
+}
+
+.section-title {
+  margin-bottom: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.subhead {
+  margin: 0.9rem 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.muted {
+  color: var(--color-ink-3);
+}
+
+.hint {
+  margin-top: 0.6rem;
+  color: var(--color-ink-3);
+  font-size: 0.875rem;
+}
+
+.notice {
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid color-mix(in oklab, var(--color-ember-5) 55%, transparent);
+  border-radius: 2px;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  background: color-mix(in oklab, var(--color-ember-1) 22%, transparent);
+}
+
+.text-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-select);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reading-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reading-list p {
+  margin-top: 0.15rem;
+  color: var(--color-ink-2);
+  font-size: 1.0625rem;
+}
+
+.reading-list strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.reading-kicker {
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* chave do mapa: os símbolos são os mesmos do globo */
+.key-list {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-ink-2);
+  font-size: 0.9375rem;
+}
+
+.key-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.swatch {
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+.swatch-dot {
+  border-radius: 50%;
+  background: var(--swatch);
+}
+
+.swatch-ring {
+  border: 2px solid var(--swatch);
+  border-radius: 50%;
+}
+
+.swatch-tri {
+  background: var(--swatch);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.swatch-diamond {
+  background: var(--swatch);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.mark {
+  display: block;
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: 0;
+  background: var(--mark);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.mark-triangle {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.mark-diamond {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.swatch-hex {
+  background: var(--swatch);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+/* camadas e filtros */
+
+.layer-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.layer-toggle {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--color-ink);
+  text-align: left;
+}
+
+.layer-toggle[aria-pressed='false'] {
+  border-style: dashed;
+  color: var(--color-ink-3);
+}
+
+.layer-toggle[aria-pressed='true'] {
+  background: color-mix(in oklab, var(--color-ink) 6%, transparent);
+}
+
+.layer-index {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 0.875rem;
+}
+
+.layer-state {
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+}
+
+.layer-detail {
+  margin: 0.2rem 0 0 0.25rem;
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+}
+
+.source-line {
+  font-size: 0.8125rem;
+}
+
+.source-error {
+  color: var(--color-ember-6);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.seg button {
+  padding: 0.4rem 0.8rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink-2);
+}
+
+.seg button[aria-pressed='true'] {
+  background: var(--color-ink);
+  color: var(--color-abyss);
+  font-weight: 700;
+}
+
+.select-wrap {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--color-ink-2);
+  font-size: 0.8125rem;
+}
+
+select {
+  padding: 0.38rem 0.5rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  background: var(--color-abyss);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+/* lista acessível (mesmos itens do globo) */
+
+.list-view details + details {
+  margin-top: 0.8rem;
+}
+
+.list-view summary,
+.table-alt summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.item-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.item-list button {
+  display: grid;
+  gap: 0.1rem;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--color-ink);
+  text-align: left;
+}
+
+.item-list button:hover {
+  border-color: var(--color-rule);
+  background: color-mix(in oklab, var(--color-ink) 5%, transparent);
+}
+
+.item-list button[aria-current='true'] {
+  border-color: var(--color-select);
+}
+
+.item-title {
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+}
+
+.item-meta {
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+}
+
+/* detalhe do ponto selecionado */
+
+.selection {
+  animation: rise 0.5s var(--ease-out-expo) both;
+}
+
+.selection-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.selection-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.icon-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--color-ink-2);
+}
+
+.kind {
+  margin: 0.5rem 0 0;
+  color: var(--kind);
+  font-weight: 700;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem 1rem;
+  margin: 0.8rem 0 0;
+}
+
+.stat dt {
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+}
+
+.stat dd {
+  margin: 0.05rem 0 0;
+  color: var(--color-ink);
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.probe-now {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.9rem;
+  margin-top: 0.8rem;
+}
+
+.probe-icon {
+  grid-row: span 2;
+  color: var(--color-ink);
+}
+
+.probe-temp {
+  font-size: 4rem;
+  color: var(--color-ink);
+}
+
+.probe-temp .unit {
+  margin-left: 0.2rem;
+  font-size: 1.75rem;
+  color: var(--color-ink-2);
+}
+
+.probe-desc {
+  margin: 0;
+  color: var(--color-ink-2);
+}
+
+.aqi {
+  font-size: 2.4rem;
+  color: var(--color-ink);
+}
+
+.aqi-band {
+  color: var(--color-ink-2);
+}
+
+/* gráfico de temperatura: linha + crosshair; valores na tabela */
+
+.temp-chart {
+  margin: 0.8rem 0 0;
+}
+
+.temp-chart figcaption {
+  font-size: 0.9375rem;
+  margin-bottom: 0.4rem;
+}
+
+.chart-box {
+  position: relative;
+  height: 84px;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.chart-box svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.temp-line {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 1.75;
+}
+
+.crosshair {
+  stroke: var(--color-ink-3);
+  stroke-dasharray: 2 3;
+}
+
+.chart-hit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.chart-col {
+  flex: 1;
+  height: 100%;
+}
+
+.chart-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  color: var(--color-ink-3);
+  font-size: 0.8125rem;
+}
+
+.table-alt {
+  margin-top: 0.6rem;
+}
+
+.table-alt table {
+  width: 100%;
+  margin-top: 0.5rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.table-alt th,
+.table-alt td {
+  padding: 0.25rem 0.4rem;
+  border-bottom: 1px solid var(--color-rule);
+  text-align: left;
+}
+
+.air {
+  margin-top: 0.4rem;
+}
+
+/* ---------- celular e tablet estreito ---------- */
+
+@media (max-width: 1023px) {
+  .globe-wrap {
+    margin: 12px 12px 0;
+  }
+
+  /* no celular, as coordenadas sobem para o canto e não disputam a dica de arraste */
+  .center-coords {
+    top: 10px;
+    right: 12px;
+    bottom: auto;
+  }
+
+  .masthead {
+    padding-top: 16px;
+  }
+
+  .figures {
+    padding: 14px 12px 0;
+  }
+
+  .side {
+    padding: 14px 12px 40px;
+  }
+}
+
+/* ---------- desktop: prancha em tela cheia ---------- */
+
+@media (min-width: 1024px) {
+  .stage {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .globe-wrap {
+    position: absolute;
+    inset: 12px;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .masthead {
+    position: absolute;
+    z-index: 2;
+    top: 28px;
+    left: 36px;
+    width: 340px;
+    padding: 0;
+  }
+
+  .figures {
+    position: absolute;
+    z-index: 2;
+    top: 28px;
+    right: 36px;
+    width: min(560px, 44vw);
+    padding: 0;
+  }
+
+  .side {
+    position: absolute;
+    z-index: 2;
+    top: 330px;
+    left: 36px;
+    bottom: 36px;
+    width: 320px;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    align-content: start;
+  }
+
+  .selection {
+    position: absolute;
+    z-index: 2;
+    top: 330px;
+    right: 36px;
+    width: 340px;
+    max-height: calc(100dvh - 366px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .globe-hint {
+    bottom: 26px;
+  }
+
+  .center-coords {
+    bottom: 26px;
+    right: 32px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .selection {
+    width: 300px;
+  }
+}
+
+/* ---------- sem WebGL: tudo em fluxo normal, lista em duas colunas ---------- */
+
+@media (min-width: 1024px) {
+  .stage-nogl {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .stage-nogl .globe-wrap,
+  .stage-nogl .masthead,
+  .stage-nogl .figures,
+  .stage-nogl .side,
+  .stage-nogl .selection {
+    position: static;
+    inset: auto;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stage-nogl .masthead,
+  .stage-nogl .figures {
+    padding: 28px 36px 0;
+  }
+
+  .stage-nogl .globe-wrap {
+    margin: 24px 36px 0;
+  }
+
+  .stage-nogl .side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 24px 36px 36px;
+    padding: 0;
+  }
+
+  .stage-nogl .selection {
+    margin: 0 36px 36px;
+  }
+
+  .stage-nogl .key {
+    display: none;
+  }
+}
+
+.stage-nogl .side {
+  margin-bottom: 64px;
+}

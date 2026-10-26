@@ -1,0 +1,23 @@
+[project]
+name = "terra-etl"
+version = "1.0.0"
+description = "ETL dos focos de calor do INPE para o Terra ao Vivo (somente biblioteca padrão)."
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]

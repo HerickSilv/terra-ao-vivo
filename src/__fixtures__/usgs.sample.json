@@ -1,0 +1,100 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 5.5,
+    "place": "283 km E of Levuka, Fiji",
+    "time": 1793009581234,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4yr",
+    "tsunami": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -178.0109,
+     -18.283,
+     641.812
+    ]
+   },
+   "id": "us6000u4yr"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 5.3,
+    "place": "Bonin Islands, Japan region",
+    "time": 1792966456010,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4we",
+    "tsunami": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     139.6916,
+     27.8572,
+     485.13
+    ]
+   },
+   "id": "us6000u4we"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 5.2,
+    "place": "205 km NW of Port-Olry, Vanuatu",
+    "time": 1793016810652,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4zb",
+    "tsunami": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     165.6029,
+     -13.8613,
+     10
+    ]
+   },
+   "id": "us6000u4zb"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 5.2,
+    "place": "59 km SW of Ashkāsham, Afghanistan",
+    "time": 1792950263735,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4va",
+    "tsunami": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     71.1025,
+     36.274,
+     110.025
+    ]
+   },
+   "id": "us6000u4va"
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "mag": 5,
+    "place": "218 km NW of Port-Olry, Vanuatu",
+    "time": 1793013475055,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4z6",
+    "tsunami": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     165.3858,
+     -13.9396,
+     10
+    ]
+   },
+   "id": "us6000u4z6"
+  }
+ ]
+}

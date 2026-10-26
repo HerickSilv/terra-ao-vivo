@@ -1,0 +1,71 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-26T17:42:52Z",
+ "source": {
+  "name": "INPE - Programa Queimadas",
+  "url": "https://terrabrasilis.dpi.inpe.br/queimadas/portal/",
+  "files": [
+   "focos_diario_br_20261024.csv",
+   "focos_diario_br_20261025.csv",
+   "focos_diario_br_20261026.csv"
+  ]
+ },
+ "window": {
+  "from": "2026-10-25T17:42:52Z",
+  "to": "2026-10-26T17:42:52Z",
+  "hours": 24
+ },
+ "latestDetection": "2026-10-26T16:40:00Z",
+ "total": 14532,
+ "previousTotal": 37219,
+ "byState": [
+  {
+   "state": "Pará",
+   "count": 9237
+  },
+  {
+   "state": "Mato Grosso",
+   "count": 870
+  },
+  {
+   "state": "Amazonas",
+   "count": 848
+  },
+  {
+   "state": "Amapá",
+   "count": 809
+  }
+ ],
+ "cells": [
+  [
+   -23.65,
+   -54.65,
+   1
+  ],
+  [
+   -21.05,
+   -48.25,
+   2
+  ],
+  [
+   -16.95,
+   -56.55,
+   2
+  ],
+  [
+   -16.95,
+   -52.85,
+   1
+  ],
+  [
+   -16.25,
+   -52.55,
+   1
+  ],
+  [
+   -16.15,
+   -49.25,
+   2
+  ]
+ ]
+}

@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens da prancha. A cor dos dados segue a FAMÍLIA do fenômeno, não a fonte:
+ *   ouro  = Terra sólida (sismos, vulcões)
+ *   brasa = fogo (focos INPE, incêndios EONET)
+ *   ciano = água e ar (tempestades, gelo)
+ * Os três hexes de marca (-gold/-ember/-cyan) foram validados com validate_palette.js
+ * (dark, superfície #0b1a2e, --pairs all): lightness, croma, CVD, visão normal e contraste PASS.
+ * As variantes -hi servem para texto/ícones pequenos sobre o painel (contraste >= 4.5:1).
+ * O globo lê estes valores em runtime (getComputedStyle), então há uma única fonte de verdade.
+ */
+@theme {
+  --color-abyss: #030b1a;
+  --color-ocean: #041f3a;
+  --color-land: #253742;
+  --color-land-br: #21484c;
+  --color-grid: #284a6c;
+  --color-halo: #3080bc;
+  --color-panel: #061324;
+  --color-rule: #2d445c;
+  --color-ink: #efede4;
+  --color-ink-2: #adc1cf;
+  --color-ink-3: #7e95aa;
+  --color-select: #fff5d9;
+  --color-gold: #b39105;
+  --color-ember: #c33c00;
+  --color-cyan: #0a9cbc;
+  --color-gold-hi: #ebc751;
+  --color-ember-hi: #ffa659;
+  --color-cyan-hi: #70d5ed;
+  --color-ember-1: #7f2213;
+  --color-ember-2: #a82704;
+  --color-ember-3: #c83e00;
+  --color-ember-4: #ea6400;
+  --color-ember-5: #fc9417;
+  --color-ember-6: #fbc959;
+
+  --font-display: 'Sofia Sans Extra Condensed Variable', 'Arial Narrow', sans-serif;
+  --font-sans: 'Alegreya Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --neatline: 12px;
+    --dock-h: 0px;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-abyss);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* Superfícies do navegador que não desenhamos, mas que carregam o design */
+  ::selection {
+    background: var(--color-select);
+    color: var(--color-abyss);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-select);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-rule) transparent;
+  }
+
+  input[type='checkbox'] {
+    accent-color: var(--color-select);
+  }
+}
+
+@layer components {
+  /* Números sempre alinhados em coluna: lista de eventos, cifras, legenda */
+  .tnum {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .plate-display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    line-height: 0.92;
+  }
+
+  /* Moldura da prancha: fio duplo e marcas de grau, desenhadas só com gradientes */
+  .neatline {
+    position: absolute;
+    inset: var(--neatline);
+    border: 1px solid color-mix(in oklab, var(--color-ink-3) 55%, transparent);
+    pointer-events: none;
+  }
+
+  .neatline::before,
+  .neatline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-ink-3) 70%, transparent) 0 1px,
+      transparent 1px 28px
+    );
+  }
+
+  .neatline::before {
+    top: 0;
+  }
+
+  .neatline::after {
+    bottom: 0;
+  }
+
+  .ghost {
+    color: color-mix(in oklab, var(--color-ink-3) 38%, transparent);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sheen {
+  0% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
